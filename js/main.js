@@ -1,3 +1,32 @@
 $(document).ready(function(){
-  
+  $('#searchuser').on('keyup',function(e){
+    let username = e.target.value;
+
+    //Request to github
+    $.ajax({
+      url:'https://api.github.com/users/'+username,
+      data:{
+        client_id:'85d3a08859829a62cb51',
+        client_secret:'fd263388bed188c53c0a8cd9c577696c650aa5fa'
+      }
+    }).done(function(user){
+      $('#profile').html(`
+        <div class="card">
+  <div class="card-header">
+    ${user.name}
+  </div>
+  <div class="card-body">
+  <div class="row">
+  <div class="col-md-3">
+  <img src="${user.avatar_url}" class="thumbnail avatar"/>
+  <a target="_blank" class="btn btn-primary btn-block" href="${user.html_url}">View Profile</a>
+  </div>
+  <div class="col md-3"></div>
+  </div>
+    </div>
+</div>
+        `);
+    });
+
+  });
 });
